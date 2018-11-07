@@ -1,0 +1,135 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    title Top-Level Awaiting for Godot
+
+    link(rel='stylesheet', type='text/css', href='build/build.css')
+
+  style.
+    .hello {
+      background-image: url('images/hello-tharr.gif')
+    }
+    .graph {
+      background-image: url('images/graph.jpg')
+    }
+    .pre-one {
+      background-image: url('images/graph-preorder-1.jpg')
+    }
+    .pre-two {
+      background-image: url('images/graph-preorder-2.jpg')
+    }
+    .pre-three {
+      background-image: url('images/graph-preorder-3.jpg')
+    }
+    .pre-four {
+      background-image: url('images/graph-preorder-4.jpg')
+    }
+    .pre-five {
+      background-image: url('images/graph-preorder-5.jpg')
+    }
+    .post-one {
+      background-image: url('images/graph-postorder-1.jpg')
+    }
+    .post-two {
+      background-image: url('images/graph-postorder-2.jpg')
+    }
+    .post-three {
+      background-image: url('images/graph-postorder-3.jpg')
+    }
+    .post-four {
+      background-image: url('images/graph-postorder-4.jpg')
+    }
+    .post-five {
+      background-image: url('images/graph-postorder-5.jpg')
+    }  
+
+  body
+
+    article
+
+      section
+        h2 Top-Level Awaiting
+        h2 For Godot
+        h3 With your host
+        h4
+          a(href='https://twitter.com/MylesBorins') @MylesBorins
+        p  DotJS 2018
+        
+      section(data-bespoke-backdrop='hello')
+        h1 oh hai
+        
+      section
+        h1 My Name is Myles
+        img.headroom(src='images/me.jpg' alt='itsa me!' width='200px' height='200px')
+      
+      section
+        h3 I am gainfully employed by Google as a Developer Advocate
+        h4 Focusing on the Node.js ecosystem and GCP
+        
+        img(src='images/gcp.png' alt='Google Cloud Platform' style='background-color:white;')
+        
+        h5.headroom The opinions expressed in this talk are solely my own
+
+      section
+        h1 A glossary
+
+      section
+        h3 ESModules specify
+        h2 Asynchronous Load
+        h2 +
+        h2 Synchronous Execution
+
+      section
+        h2 Load
+        ul
+          li.hide
+          li Fetch source texts for *all* the module graph
+          li Resolve specifiers within source texts
+
+      section
+        h2 Link
+        ul
+          li.hide
+          li Module Graph must be in memory
+          li Executed in pre-order traversal (Root, Left, Right)
+
+      section(data-bespoke-backdrop='graph')
+        //- img.headroom(src='images/graph.jpg' alt='A graph. Root depends on A and B. A depends on C and D.' width='60%')
+
+      section(data-bespoke-backdrop='pre-one')
+        //- img.headroom(src='images/graph-preorder-1.jpg' alt='first node travelled to' width='60%')
+      section(data-bespoke-backdrop='pre-two')
+        //- img.headroom(src='images/graph-preorder-2.jpg' alt='second node travelled to' width='60%')
+      section(data-bespoke-backdrop='pre-three')
+        //- img.headroom(src='images/graph-preorder-3.jpg' alt='third node travelled to' width='60%')
+      section(data-bespoke-backdrop='pre-four')
+        //- img.headroom(src='images/graph-preorder-4.jpg' alt='fourth node travelled to' width='60%')
+      section(data-bespoke-backdrop='pre-five')
+        //- img.headroom(src='images/graph-preorder-5.jpg' alt='fifth node travelled to' width='60%')
+      section
+        h2 Execution
+        ul
+          li.hide
+          li Requires linked be completed
+          li Done in post-order traversal (Left, Right, Root)
+
+      section(data-bespoke-backdrop='graph')
+      section(data-bespoke-backdrop='post-one')
+      section(data-bespoke-backdrop='post-two')
+      section(data-bespoke-backdrop='post-three')
+      section(data-bespoke-backdrop='post-four')
+      section(data-bespoke-backdrop='post-five')
+
+      section
+        h2 Top-Level Await
+        h3 could change synchronous execution guarantee
+        h4 come ask me about this later
+
+      section
+        h2 Thank You
+        img.headroom(src='images/best-gif-evar.gif' alt='a surfing puppy' width='20%')
+        h4 @MylesBorins
+
+    script(src='build/build.js')
