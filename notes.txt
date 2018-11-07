@@ -1,0 +1,24 @@
+Top-Level Await
+
+* What is async / await
+* Why Top-Level Await?
+* TLA is a foot gun
+* TLA doesn't have to block
+* What's a goal?
+  - module vs. script
+* How does Async / Await work?
+* Why is TLA different
+* Stages for ESM module loader
+* How would TLA change loader execution order
+* How does tc39 work
+* Staging process
+  - Getting to stage 1
+    - https://docs.google.com/presentation/d/1B0csbsot4HTrk30ueYMDqd1S-nRkCiIcVXaWgtSU_0Q/edit#slide=id.p
+  - Getting to stage 2
+    - https://docs.google.com/presentation/d/1lTTiNosXlqk78FO7Ze_CdMbF3PhO36kCk-mT783wpi8/edit#slide=id.p
+* BBs first spec text
+  - what is a spect level abstraction?
+* What do we have to do next?
+  - define semantics for cycles
+  - finish spec text
+  - spec level Promise.all
