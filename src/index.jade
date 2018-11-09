@@ -50,6 +50,12 @@ html
     .dontstop {
       background-image: url('images/dontstop.jpg')
     }
+    .cant-do {
+      background-image: url('images/cant-do.gif')
+    }
+    .tiny-flip {
+      background-image: url('images/tiny-flip.gif')
+    }
 
   body
 
@@ -79,7 +85,7 @@ html
         h5.headroom The opinions expressed in this talk are solely my own
 
       section
-        h1 Chapter 1
+        h1 Chapter One
 
       section
         h2 Asynchronicity
@@ -114,18 +120,6 @@ html
         h2 Promises 
         h3 Made it into the language ~20 years later in 2014
 
-      section
-        h2 Controversial?
-
-      section
-        h2 Yes!
-
-      section
-        h2 Better?
-
-      section
-        h2 Depends who you ask
-
       section.small-code
         pre
           code.language-javascript.
@@ -142,20 +136,20 @@ html
             });
 
       section
-        h2 Async / Await
-        h3 Arrived in December of 2016
-
-      section
         h2 Controversial?
 
       section
-        h2 Nope.
+        h2 Yes!
 
       section
         h2 Better?
 
       section
-        h2 Definitely!
+        h2 Depends who you ask
+
+      section
+        h2 Async / Await
+        h3 Arrived in December of 2016
 
       section.small-code
         pre
@@ -174,72 +168,165 @@ html
             }());
 
       section
-        h1 Callbacks
-
-      section.small-code
-        pre
-          code.language-javascript.
-            request('https://nodejs.org/download/release/index.json', {
-              json: true
-            }, function (error, response, body) {
-              if (error) {
-                console.error(error);
-                return
-              }
-              body.sort(sortDate);
-              const {version, date} = body[0];
-              console.log(`The latest release of node is ${version}.\n`
-                + `It was released on ${date}.`);
-            });
+        h2 Controversial?
 
       section
-        h1 Promises
-      
-      section.small-code
-        pre
-          code.language-javascript.
-            fetch('https://nodejs.org/download/release/index.json')
-              .then(response => response.json())
-              .then(json => {
-                json.sort(sortDate);
-                const {version, date} = json[0];
-                console.log(`The latest release of node is ${version}.\n`
-                  + `It was released on ${date}.`);
-              })
-              .catch(e => console.error(e));
+        h2 Nope.
 
       section
-        h1 Async / Await
-      
-      section.small-code
-        pre
-          code.language-javascript.
-            async function main () {
-              const response =
-                await fetch('https://nodejs.org/download/release/index.json');
-              const json = await response.json();
-              json.sort(sortDate);
-              const {version, date} = json[0];
-              console.log(`The latest release of node is ${version}.\n`
-                + `It was released on ${date}.`);
-            }
-
-            main()
-              .catch(e => console.error(e));
+        h2 Better?
 
       section
-        h1 Top-Level Await
+        h2 Definitely!
+
+      section
+        h2 Can we improve it?
+
+      section
+        h2 I think so!
+
+      section
+        h1 Chapter 2
+
+      section(data-bespoke-backdrop='cant-do')
+        h2 Don't tell me
+        h2 what I can't do
       
-      section.small-code
-        pre
-          code.language-javascript.
-            const response =
-              await fetch('https://nodejs.org/download/release/index.json');
-            const json = await response.json();
-            json.sort(sortDate);
-            const {version, date} = json[0];
-            console.log(`The latest release of node is ${version}.\n`
-              + `It was released on ${date}.`);
+      section
+        h2 February 21 2017
+        h3 Node.js 7.6.0 is release
+        h4 It includes V8 5.5
+        h3 which has support for async / await
+
+      section
+        h2 I was really excited to use await until...
+
+      section
+        img.headroom(src="images/throw.png" alt="error message when trying to use Top-Level Await today"  width='60%')
+
+      section(data-bespoke-backdrop='tiny-flip')
+
+      section
+        h2 May 31 2017
+        h3 My First attempt to make TLA work in node
+        img.headroom(src="images/first-attempt.png" alt="a naive node patch to make TLA work that broke everything"  width='40%')
+
+      section
+        h2 Spoiler: It Didn't
+
+      section
+        h1 Chapter 2
+
+      section
+        h2 Top-level await
+        h2 is a footgun 👣🔫
+
+      section
+        h3
+          a(href="https://gist.github.com/Rich-Harris/0b6f317657f5167663b493c722647221") https://gist.github.com/Rich-Harris/0b6f317657f5167663b493c722647221
+
+      section
+        h1 Chapter Three
+
+      section
+        h2 A history lesson
+
+      section
+        h2 Top-Level await was always being considered
+        h3 while async / await was being standardized
+
+      section
+        h3
+          a(href="http://github.com/tc39/agendas/") http://github.com/tc39/agendas/
+
+      section
+        h2 Some quick history of async / await
+        ul
+          li.hide
+          li originally brought to TC39 in January of 2014
+          li In April 2014 `await` keyword was reserved in the module goal
+          li July 2015 `async` / `await` moved to stage two
+          li it was decided to delay decision about Top-Level await at that time
+
+      section
+        h2 Let's unpack that
+
+      section
+        h1 TC39
+
+      section
+        h1 Stage process
+
+      section
+        h1 Module Goal
+
+      //- section
+      //-   h1 Callbacks
+      //-
+      //- section.small-code
+      //-   pre
+      //-     code.language-javascript.
+      //-       request('https://nodejs.org/download/release/index.json', {
+      //-         json: true
+      //-       }, function (error, response, body) {
+      //-         if (error) {
+      //-           console.error(error);
+      //-           return
+      //-         }
+      //-         body.sort(sortDate);
+      //-         const {version, date} = body[0];
+      //-         console.log(`The latest release of node is ${version}.\n`
+      //-           + `It was released on ${date}.`);
+      //-       });
+      //-
+      //- section
+      //-   h1 Promises
+      //-
+      //- section.small-code
+      //-   pre
+      //-     code.language-javascript.
+      //-       fetch('https://nodejs.org/download/release/index.json')
+      //-         .then(response => response.json())
+      //-         .then(json => {
+      //-           json.sort(sortDate);
+      //-           const {version, date} = json[0];
+      //-           console.log(`The latest release of node is ${version}.\n`
+      //-             + `It was released on ${date}.`);
+      //-         })
+      //-         .catch(e => console.error(e));
+      //-
+      //- section
+      //-   h1 Async / Await
+      //-
+      //- section.small-code
+      //-   pre
+      //-     code.language-javascript.
+      //-       async function main () {
+      //-         const response =
+      //-           await fetch('https://nodejs.org/download/release/index.json');
+      //-         const json = await response.json();
+      //-         json.sort(sortDate);
+      //-         const {version, date} = json[0];
+      //-         console.log(`The latest release of node is ${version}.\n`
+      //-           + `It was released on ${date}.`);
+      //-       }
+      //-
+      //-       main()
+      //-         .catch(e => console.error(e));
+      //-
+      //- section
+      //-   h1 Top-Level Await
+      //-
+      //- section.small-code
+      //-   pre
+      //-     code.language-javascript.
+      //-       const response =
+      //-         await fetch('https://nodejs.org/download/release/index.json');
+      //-       const json = await response.json();
+      //-       json.sort(sortDate);
+      //-       const {version, date} = json[0];
+      //-       console.log(`The latest release of node is ${version}.\n`
+      //-         + `It was released on ${date}.`);
 
       section
         h3 ESModules specify
