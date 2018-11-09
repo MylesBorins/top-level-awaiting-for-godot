@@ -103,6 +103,10 @@ html
         h2 Asynchronicity
         h2 is hard
 
+      section(data-bespoke-backdrop='dontstop')
+        h2 Don't stop,
+        h2 don't stop the thread
+
       section
         h3 From the beginning of time (1995)
         h2 We had callbacks in JavaScript
@@ -114,19 +118,13 @@ html
                 b(aa, (bb) => {
                     c(bb, (cc) => {
                         d(cc, (dd) => {
-                            e(dd, (ee) => {
-                                f(ee, (OMG) => {
-                                    throw 'me into the abyss';
-                                });
+                            e(dd, (OMG) => {
+                                throw 'me into the abyss';
                             });
                         });
                     });
                 });
             });
-
-      section(data-bespoke-backdrop='dontstop')
-        h2 Don't stop,
-        h2 don't stop the thread
 
       section
         h2 Promises 
@@ -147,17 +145,17 @@ html
               console.log('I got chu bae');
             });
 
-      section
-        h2 Controversial?
-
-      section
-        h2 Yes!
-
-      section
-        h2 Better?
-
-      section
-        h2 Depends who you ask
+      //- section
+      //-   h2 Controversial?
+      //-
+      //- section
+      //-   h2 Yes!
+      //-
+      //- section
+      //-   h2 Better?
+      //-
+      //- section
+      //-   h2 Depends who you ask
 
       section
         h2 Async / Await
@@ -179,23 +177,23 @@ html
               }
             }());
 
-      section
-        h2 Controversial?
-
-      section
-        h2 Nope.
-
-      section
-        h2 Better?
-
-      section
-        h2 Definitely!
-
-      section
-        h2 Can we improve it?
-
-      section
-        h2 I think so!
+      //- section
+      //-   h2 Controversial?
+      //-
+      //- section
+      //-   h2 Nope.
+      //-
+      //- section
+      //-   h2 Better?
+      //-
+      //- section
+      //-   h2 Definitely!
+      //-
+      //- section
+      //-   h2 Can we improve it?
+      //-
+      //- section
+      //-   h2 I think so!
 
       section
         h1 Chapter Two
@@ -217,6 +215,11 @@ html
         img.headroom(src="images/throw.png" alt="error message when trying to use Top-Level Await today"  width='60%')
 
       section(data-bespoke-backdrop='tiny-flip')
+
+      section
+        h3 It looked like
+        h2 Top-Level Await
+        h3 Wasn't a thing
 
       section
         h2 May 31 2017
@@ -241,6 +244,7 @@ html
       section
         h3 In September of 2016
         h2 Rich Harris wrote
+        h3 Top-Level Await is a footgun
         h3
           a(href="https://gist.github.com/Rich-Harris/0b6f317657f5167663b493c722647221") https://gist.github.com/Rich-Harris/0b6f317657f5167663b493c722647221
 
@@ -256,10 +260,11 @@ html
           li Fetching resources over network would blocked
           li No interop support for common.js
           li Cycles could introduce deadlock
+          li Potential to introduce indeterminism into graph execution
 
       section
         h2 Despite this strong critique
-        h3 There was no prior decision from TC39 banning Top-Level Await
+        h3 There was no prior decision from TC39 regarding Top-Level Await
 
       section
         h2 I decided to take Top-Level Await to the committee
@@ -304,32 +309,32 @@ html
         h3 The Committee who implements it is
         img.headroom(src='images/tc39.png' alt='logo for tc39')
 
-      section
-        h3 The committee meets
-        h2 every other month
-        h3 At locations around the world
+      //- section
+      //-   h3 The committee meets
+      //-   h2 every other month
+      //-   h3 At locations around the world
 
-      section
-        h2 The participants include
-        ul
-          li.hide
-          li Major Browser Vendors
-          li Academics
-          li Industry Experts
-          li Open Source Maintainers
-          li Maybe you?
+      //- section
+      //-   h2 The participants include
+      //-   ul
+      //-     li.hide
+      //-     li Major Browser Vendors
+      //-     li Academics
+      //-     li Industry Experts
+      //-     li Open Source Maintainers
+      //-     li Maybe you?
 
-      section(data-bespoke-backdrop='anyone')
-        h1 Can Anyone Join?
+      //- section(data-bespoke-backdrop='anyone')
+      //-   h1 Can Anyone Join?
+      //-
+      //- section
+      //-   h1 What is a Member?
+      //-
+      //- section
+      //-   h1 What is a Delegate?
 
-      section
-        h1 What is a Member?
-      
-      section
-        h1 What is a Delegate?
-
-      section
-        h1 How does a feature get developed?
+      //- section
+      //-   h1 How does a feature get developed?
 
       section
         h1 Consensus
@@ -352,7 +357,7 @@ html
       section
         h2 In January 2018
         h3 Top-Level await was brought TC39
-        h2 Attempting for Stage 0
+        h2 Attempting for Stage 1
 
       section
         h2 The proposal included
@@ -367,8 +372,7 @@ html
       section
         h3 Motivation #1
         h2 IIAFE
-        h6 Immediately invoked async function expression
-
+        h6.headroom Immediately invoked async function expression
 
       section.small-code
         pre
@@ -407,14 +411,70 @@ html
 
       section
         h2 Variant A
-        h3.slim A call to top-level await would block execution in the graph until it had resolved.
+        h3.slim A call to top-level await would block execution of the graph until it had resolved.
+
+      section
+        h2 Assuming A, B, C
+        h2 all have a Top-Level await
+        pre
+          code.language-javascript.
+            import a from './a.mjs'
+            import b from './b.mjs'
+            import c from './c.mjs'
+
+            console.log(a, b, c);
+
+      section
+        h2 The code is equivalent to
+        pre
+          code.language-javascript.
+            (async () => {
+              const a = await import('./a.mjs');
+              const b = await import('./b.mjs');
+              const c = await import('./c.mjs');
+  
+              console.log(a, b, c);
+            })();
+
+      section(data-bespoke-backdrop='graph')
+      section(data-bespoke-backdrop='post-one')
+      section(data-bespoke-backdrop='post-two')
+      section(data-bespoke-backdrop='post-three')
+      section(data-bespoke-backdrop='post-four')
+      section(data-bespoke-backdrop='post-five')
 
       section
         h2 Variant B
         h3.slim A call to top-level await would block execution of child nodes in the graph but would allow siblings to continue to execute.
 
       section
-        h2 Variant C
+        h2 Assuming A, B, C
+        h2 all have a Top-Level await
+        pre
+          code.language-javascript.
+            import a from './a.mjs'
+            import b from './b.mjs'
+            import c from './c.mjs'
+
+            console.log(a, b, c);
+
+      section
+        h2 The code is equivalent to
+        pre
+          code.language-javascript.
+            (async () => {
+              const [a, b, c] = await Promise.all([
+                import('./a.mjs'),
+                import('./b.mjs'),
+                import('./c.mjs')
+              ]);
+              console.log(a, b, c);
+            })();
+
+      section(data-bespoke-backdrop='post-five')
+
+      section
+        h2 Optional Constraint
         h5.headroom.slim Many of the use cases for top-level await are for bootstrapping an application. Enforcing that top-level await could only be used inside of a module without exports would allow individuals to use many of the patterns they would like to use in application bootstrapping while avoiding the edge cases of graph blocking or deadlocks.
 
       section
@@ -448,8 +508,8 @@ html
         ul
           li.hide
           li Variant A would halt progress in the module graph until resolved
-          li Variant B will not block siblings execution
-          li Variant C would limit blocking to root node
+          li Variant B would halt progress but not block siblings execution
+          li The optional constraint would limit the above constraints
 
       section
         h3 There are existing ways to halt progress in JavaScript
@@ -477,6 +537,11 @@ html
         h6 Atomics allow blocking forward progress by waiting on an index that never changes
       
       section
+        h3 Is Blocking Execution
+        h2 A strong enough reason
+        h3 To block Top-Level Await?
+      
+      section
         h3 Another Constraint:
         h2 Deadlock
 
@@ -489,8 +554,108 @@ html
         h1 Chapter Six
       
       section
-        h2 The Road
+        h3 The Road
         h2 To Stage 2
+
+      section
+        h3 Reaching stage 1 was a big step
+        h2 It signaled that TC39 was interested
+        h3 In exploring the problem space of TLA
+
+      section
+        h3 Moving to stage 2 requires reaching consensus
+        h2 On the general shape of the solution to the problem
+
+      section
+        h2 We identified necessary
+        h2 spec changes
+
+      section
+        h3 When your ESM code is executed
+        h2 It is represented
+        h3 as a graph of
+        h2 Source Text Module Records
+
+      section
+        h3 A Source Text Module Record is used to represent information about a module that was defined from ECMAScript source text that was parsed using the goal symbol Module.
+
+      section
+        h2 ECMA262 defines how these Records are instantiated
+        h3 and how they are represented in memory
+
+      section
+        h3 We made all modules in the graph
+        h2 Async
+
+      section
+        h3 To do this we abstracted code from the
+        h2 Async Function Specification
+        h3 for instantiation of Module Records in the graph
+
+      section
+        h3 With this infrastructure in place
+        h2 Every module would now have an a promise capability
+        h3 Allowing for deferred execution at the Top-Level
+
+      section
+        h3 We were able to defer execution by calling
+        h2 Spec-Level Await on the execution of the module
+        h3 Yes, the spec has it's own abstractions
+
+      section
+        h3 this algorithm supports Variant A
+        h2 A spec level Promise.all would add support
+        h3 for Variant B
+
+      section
+        h3 as such we were able to defer
+        h2 making a decision
+        h2 on A versus B
+        h3 Unblocking Objections to either semantics
+
+      section
+        h3 We identified that the feature would only be supported
+        h2 In the module goal
+        h3 Unblocking objections about interoperability
+
+      section
+        h3 We deferred to current behavior
+        h2 For handling deadlock
+        h3 Unblocking objections related to cycles
+
+      section
+        h3 In may of 2018
+        h2 Top-Level Await
+        h2 went to stage 2
+
+      section
+        h1 Chapter Seven
+
+      section
+        h2 What's next?
+
+      section
+        h3 I want to move forward
+        h2 With Variant B
+        h3 We need to build consensus around these semantics
+
+      section
+        h3 We are going through a variety of examples
+        h2 To define semantics for deadlock
+        h3 The intent is to make things fail early and obviously
+
+      section
+        h3 We need to finish writing the spec text
+        h2 The text then needs to be reviewed and approved
+
+      section
+        h2 ETA, ¯\_(ツ)_/¯
+        pre
+          code.language-javascript.
+            const [you, me] = Promise.all([
+              await topLevelAwait('patience')
+              await topLevelAwait('persistence');
+            ]);
       //- section
       //-   h1 Callbacks
       //-
@@ -559,57 +724,46 @@ html
       //-       console.log(`The latest release of node is ${version}.\n`
       //-         + `It was released on ${date}.`);
 
-      section
-        h3 ESModules specify
-        h2 Asynchronous Load
-        h2 +
-        h2 Synchronous Execution
+      //- section
+      //-   h3 ESModules specify
+      //-   h2 Asynchronous Load
+      //-   h2 +
+      //-   h2 Synchronous Execution
+      //-
+      //- section
+      //-   h2 Load
+      //-   ul
+      //-     li.hide
+      //-     li Fetch source texts for *all* the module graph
+      //-     li Resolve specifiers within source texts
+      //-
+      //- section
+      //-   h2 Link
+      //-   ul
+      //-     li.hide
+      //-     li Module Graph must be in memory
+      //-     li Executed in pre-order traversal (Root, Left, Right)
 
-      section
-        h2 Load
-        ul
-          li.hide
-          li Fetch source texts for *all* the module graph
-          li Resolve specifiers within source texts
+      //- section(data-bespoke-backdrop='graph')
+      //-   //- img.headroom(src='images/graph.jpg' alt='A graph. Root depends on A and B. A depends on C and D.' width='60%')
+      //-
+      //- section(data-bespoke-backdrop='pre-one')
+      //-   //- img.headroom(src='images/graph-preorder-1.jpg' alt='first node travelled to' width='60%')
+      //- section(data-bespoke-backdrop='pre-two')
+      //-   //- img.headroom(src='images/graph-preorder-2.jpg' alt='second node travelled to' width='60%')
+      //- section(data-bespoke-backdrop='pre-three')
+      //-   //- img.headroom(src='images/graph-preorder-3.jpg' alt='third node travelled to' width='60%')
+      //- section(data-bespoke-backdrop='pre-four')
+      //-   //- img.headroom(src='images/graph-preorder-4.jpg' alt='fourth node travelled to' width='60%')
+      //- section(data-bespoke-backdrop='pre-five')
+      //-   //- img.headroom(src='images/graph-preorder-5.jpg' alt='fifth node travelled to' width='60%')
+      //- section
+      //-   h2 Execution
+      //-   ul
+      //-     li.hide
+      //-     li Requires linked be completed
+      //-     li Done in post-order traversal (Left, Right, Root)
 
-      section
-        h2 Link
-        ul
-          li.hide
-          li Module Graph must be in memory
-          li Executed in pre-order traversal (Root, Left, Right)
-
-      section(data-bespoke-backdrop='graph')
-        //- img.headroom(src='images/graph.jpg' alt='A graph. Root depends on A and B. A depends on C and D.' width='60%')
-
-      section(data-bespoke-backdrop='pre-one')
-        //- img.headroom(src='images/graph-preorder-1.jpg' alt='first node travelled to' width='60%')
-      section(data-bespoke-backdrop='pre-two')
-        //- img.headroom(src='images/graph-preorder-2.jpg' alt='second node travelled to' width='60%')
-      section(data-bespoke-backdrop='pre-three')
-        //- img.headroom(src='images/graph-preorder-3.jpg' alt='third node travelled to' width='60%')
-      section(data-bespoke-backdrop='pre-four')
-        //- img.headroom(src='images/graph-preorder-4.jpg' alt='fourth node travelled to' width='60%')
-      section(data-bespoke-backdrop='pre-five')
-        //- img.headroom(src='images/graph-preorder-5.jpg' alt='fifth node travelled to' width='60%')
-      section
-        h2 Execution
-        ul
-          li.hide
-          li Requires linked be completed
-          li Done in post-order traversal (Left, Right, Root)
-
-      section(data-bespoke-backdrop='graph')
-      section(data-bespoke-backdrop='post-one')
-      section(data-bespoke-backdrop='post-two')
-      section(data-bespoke-backdrop='post-three')
-      section(data-bespoke-backdrop='post-four')
-      section(data-bespoke-backdrop='post-five')
-
-      section
-        h2 Top-Level Await
-        h3 could change synchronous execution guarantee
-        h4 come ask me about this later
 
       section
         h2 Thank You
