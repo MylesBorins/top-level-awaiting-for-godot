@@ -43,13 +43,19 @@ html
     }
     .post-five {
       background-image: url('images/graph-postorder-5.jpg')
-    }  
+    } 
+    .godot {
+      background-image: url('images/godot-waiting.gif')
+    }
+    .dontstop {
+      background-image: url('images/dontstop.jpg')
+    }
 
   body
 
     article
 
-      section
+      section(data-bespoke-backdrop='godot')
         h2 Top-Level Awaiting
         h2 For Godot
         h3 With your host
@@ -58,7 +64,7 @@ html
         p  DotJS 2018
         
       section(data-bespoke-backdrop='hello')
-        h1 oh hai
+        h1 Bonjour!
         
       section
         h1 My Name is Myles
@@ -73,7 +79,167 @@ html
         h5.headroom The opinions expressed in this talk are solely my own
 
       section
-        h1 A glossary
+        h1 Chapter 1
+
+      section
+        h2 Asynchronicity
+        h2 is hard
+
+      section
+        h3 From the beginning of time (1995)
+        h2 We had callbacks in JavaScript
+
+      section.small-code
+        pre
+          code.language-javascript.
+            a((aa) => {
+                b(aa, (bb) => {
+                    c(bb, (cc) => {
+                        d(cc, (dd) => {
+                            e(dd, (ee) => {
+                                f(ee, (OMG) => {
+                                    throw 'me into the abyss';
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+
+      section(data-bespoke-backdrop='dontstop')
+        h2 Don't stop,
+        h2 don't stop the thread
+
+      section
+        h2 Promises 
+        h3 Made it into the language ~20 years later in 2014
+
+      section
+        h2 Controversial?
+
+      section
+        h2 Yes!
+
+      section
+        h2 Better?
+
+      section
+        h2 Depends who you ask
+
+      section.small-code
+        pre
+          code.language-javascript.
+            a.then((aa) => {
+              return b(aa);
+            }),then((bb) => {
+              return c(bb);
+            }).then((cc) => {
+              return d(cc);
+            }).then((OMG) => {
+              throw 'me into the abyss';
+            }).catch((e) => {
+              console.log('I got chu bae');
+            });
+
+      section
+        h2 Async / Await
+        h3 Arrived in December of 2016
+
+      section
+        h2 Controversial?
+
+      section
+        h2 Nope.
+
+      section
+        h2 Better?
+
+      section
+        h2 Definitely!
+
+      section.small-code
+        pre
+          code.language-javascript.
+            (async function main () {
+              try {
+                const aa = await a();
+                const bb = await b(aa);
+                const cc = await c(bb);
+                const OMG = await d(cc);
+                throw 'me into the absyss';
+              }
+              catch (e) {
+                console.log('never mind');
+              }
+            }());
+
+      section
+        h1 Callbacks
+
+      section.small-code
+        pre
+          code.language-javascript.
+            request('https://nodejs.org/download/release/index.json', {
+              json: true
+            }, function (error, response, body) {
+              if (error) {
+                console.error(error);
+                return
+              }
+              body.sort(sortDate);
+              const {version, date} = body[0];
+              console.log(`The latest release of node is ${version}.\n`
+                + `It was released on ${date}.`);
+            });
+
+      section
+        h1 Promises
+      
+      section.small-code
+        pre
+          code.language-javascript.
+            fetch('https://nodejs.org/download/release/index.json')
+              .then(response => response.json())
+              .then(json => {
+                json.sort(sortDate);
+                const {version, date} = json[0];
+                console.log(`The latest release of node is ${version}.\n`
+                  + `It was released on ${date}.`);
+              })
+              .catch(e => console.error(e));
+
+      section
+        h1 Async / Await
+      
+      section.small-code
+        pre
+          code.language-javascript.
+            async function main () {
+              const response =
+                await fetch('https://nodejs.org/download/release/index.json');
+              const json = await response.json();
+              json.sort(sortDate);
+              const {version, date} = json[0];
+              console.log(`The latest release of node is ${version}.\n`
+                + `It was released on ${date}.`);
+            }
+
+            main()
+              .catch(e => console.error(e));
+
+      section
+        h1 Top-Level Await
+      
+      section.small-code
+        pre
+          code.language-javascript.
+            const response =
+              await fetch('https://nodejs.org/download/release/index.json');
+            const json = await response.json();
+            json.sort(sortDate);
+            const {version, date} = json[0];
+            console.log(`The latest release of node is ${version}.\n`
+              + `It was released on ${date}.`);
 
       section
         h3 ESModules specify

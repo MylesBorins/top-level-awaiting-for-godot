@@ -1,7 +1,9 @@
 Top-Level Await
 
 * What is async / await
+* What is Top-Level Await?
 * Why Top-Level Await?
+* History of Top-Level Await
 * TLA is a foot gun
 * TLA doesn't have to block
 * What's a goal?
