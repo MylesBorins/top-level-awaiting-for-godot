@@ -56,6 +56,18 @@ html
     .tiny-flip {
       background-image: url('images/tiny-flip.gif')
     }
+    .data-pat {
+      background-image: url('images/data-pat.gif')
+    }
+    .anyone {
+      background-image: url('images/anyone.gif')
+    }
+    .warp {
+      background-image: url('images/warp.gif')
+    }
+    .newyear {
+      background-image: url('images/newyear.gif')
+    }
 
   body
 
@@ -87,7 +99,7 @@ html
       section
         h1 Chapter One
 
-      section
+      section(data-bespoke-backdrop='data-pat')
         h2 Asynchronicity
         h2 is hard
 
@@ -186,7 +198,7 @@ html
         h2 I think so!
 
       section
-        h1 Chapter 2
+        h1 Chapter Two
 
       section(data-bespoke-backdrop='cant-do')
         h2 Don't tell me
@@ -215,18 +227,46 @@ html
         h2 Spoiler: It Didn't
 
       section
-        h1 Chapter 2
+        h2 It turned out that the Node.js test suite
+        h3 Wasn't the only place that had an issue
+        h2 With Top-Level Await
+
+      section
+        h1 Chapter Three
 
       section
         h2 Top-level await
         h2 is a footgun 👣🔫
 
       section
+        h3 In September of 2016
+        h2 Rich Harris wrote
         h3
           a(href="https://gist.github.com/Rich-Harris/0b6f317657f5167663b493c722647221") https://gist.github.com/Rich-Harris/0b6f317657f5167663b493c722647221
 
       section
-        h1 Chapter Three
+        h3 a gist that would be brought up whenever i mentioned
+        h2 Top-Level Await
+
+      section
+        h2 TLDR;
+        ul
+          li.hide
+          li Top-Level await can block execution
+          li Fetching resources over network would blocked
+          li No interop support for common.js
+          li Cycles could introduce deadlock
+
+      section
+        h2 Despite this strong critique
+        h3 There was no prior decision from TC39 banning Top-Level Await
+
+      section
+        h2 I decided to take Top-Level Await to the committee
+        h3 Worst case scenario, get a solid no and stop flame wars
+
+      section
+        h1 Chapter Four
 
       section
         h2 A history lesson
@@ -236,11 +276,13 @@ html
         h3 while async / await was being standardized
 
       section
-        h3
+        h3 I did some research by reviewing the agendas of past meetings.
+        h4
           a(href="http://github.com/tc39/agendas/") http://github.com/tc39/agendas/
 
       section
-        h2 Some quick history of async / await
+        h3 Some quick history of
+        h2 async / await
         ul
           li.hide
           li originally brought to TC39 in January of 2014
@@ -249,17 +291,206 @@ html
           li it was decided to delay decision about Top-Level await at that time
 
       section
-        h2 Let's unpack that
+        h2 taking a step back
+      
+      section
+        img(src='images/babby.jpg' alt='how is language babby formed')
 
       section
-        h1 TC39
+        h3 The Spec is
+        h2 ECMA-262
 
       section
-        h1 Stage process
+        h3 The Committee who implements it is
+        img.headroom(src='images/tc39.png' alt='logo for tc39')
 
       section
-        h1 Module Goal
+        h3 The committee meets
+        h2 every other month
+        h3 At locations around the world
 
+      section
+        h2 The participants include
+        ul
+          li.hide
+          li Major Browser Vendors
+          li Academics
+          li Industry Experts
+          li Open Source Maintainers
+          li Maybe you?
+
+      section(data-bespoke-backdrop='anyone')
+        h1 Can Anyone Join?
+
+      section
+        h1 What is a Member?
+      
+      section
+        h1 What is a Delegate?
+
+      section
+        h1 How does a feature get developed?
+
+      section
+        h1 Consensus
+
+      section
+        h2 The Stages
+        li.hide
+        li Stage 0: strawman
+        li Stage 1: proposal
+        li Stage 2: draft
+        li Stage 3: candidate
+        li Stage 4: finished
+
+      section
+        h1 Chapter Five
+      
+      section
+        h2 A footgun in the door
+
+      section
+        h2 In January 2018
+        h3 Top-Level await was brought TC39
+        h2 Attempting for Stage 0
+
+      section
+        h2 The proposal included
+        ul
+          li.hide
+          li History of TLA
+          li Motivation for the feature
+          li Potential Implementations
+          li Use Cases
+          li Constraints
+
+      section
+        h3 Motivation #1
+        h2 IIAFE
+        h6 Immediately invoked async function expression
+
+
+      section.small-code
+        pre
+          code.language-javascript.
+            import static1 from './static1.mjs';
+            import { readFile } from 'fs';
+
+            (async () => {
+              const dynamic = await import('./dynamic'
+                + process.env.something + '.mjs');
+              const file = JSON.parse(await readFile('./config.json'));
+              // main program goes here...
+            })();
+
+      section
+        h3 Motivation #2
+        h2 Completely Async Modules
+        
+      section.small-code
+        pre
+          code.language-javascript.
+            export default async () => {
+              // import other modules like this one
+              const import1 = await (await import('./import1.mjs')).default();
+              const import2 = await (await import('./import2.mjs')).default();
+
+              // compute some exports...
+              return {
+                export1: ...,
+                export2: ...
+              };
+            };
+
+      section
+        h1 Potential Solutions
+
+      section
+        h2 Variant A
+        h3.slim A call to top-level await would block execution in the graph until it had resolved.
+
+      section
+        h2 Variant B
+        h3.slim A call to top-level await would block execution of child nodes in the graph but would allow siblings to continue to execute.
+
+      section
+        h2 Variant C
+        h5.headroom.slim Many of the use cases for top-level await are for bootstrapping an application. Enforcing that top-level await could only be used inside of a module without exports would allow individuals to use many of the patterns they would like to use in application bootstrapping while avoiding the edge cases of graph blocking or deadlocks.
+
+      section
+        h1 Use Cases
+      
+      section
+        h3 Dynamic dependency pathing
+        pre
+          code.language-javascript.
+            export const strings =
+              await import(`/i18n/${navigator.language}`);
+      
+      section
+        h3 Resource initialization
+        pre
+          code.language-javascript.
+            const connection = await dbConnector();
+      section
+        h3 Dependency fallbacks
+        pre
+          code.language-javascript.
+            let jQuery;
+            try {
+              jQuery = await import('https://cdn-a.com/jQuery');
+            } catch {
+              jQuery = await import('https://cdn-b.com/jQuery');
+            }
+
+      section
+        h2 Constraints
+        ul
+          li.hide
+          li Variant A would halt progress in the module graph until resolved
+          li Variant B will not block siblings execution
+          li Variant C would limit blocking to root node
+
+      section
+        h3 There are existing ways to halt progress in JavaScript
+        
+      section
+        h3 Infinite Loops
+        pre
+          code.language-javascript.
+            for (const n of primes()) {
+              console.log(`${n} is prime}`);
+            }
+      
+      section
+        h3 Infinite Recursion
+        pre
+          code.language-javascript.
+            const fibb = n => (n ? fibb(n - 1) : 1);
+            fibb(Infinity);
+
+      section
+        h3 Atomics.wait
+        pre
+          code.language-javascript.
+            Atomics.wait(shared_array_buffer, 0, 0);
+        h6 Atomics allow blocking forward progress by waiting on an index that never changes
+      
+      section
+        h3 Another Constraint:
+        h2 Deadlock
+
+      section
+        h3 Achievement unlocked
+        h2 Top-Level Await
+        h2 was moved to Stage 1
+
+      section
+        h1 Chapter Six
+      
+      section
+        h2 The Road
+        h2 To Stage 2
       //- section
       //-   h1 Callbacks
       //-
