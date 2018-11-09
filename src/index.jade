@@ -68,6 +68,24 @@ html
     .newyear {
       background-image: url('images/newyear.gif')
     }
+    .land-before {
+      background-image: url('images/land-before.gif')
+    }
+    .promise {
+      background-image: url('images/promise.gif')
+    }
+    .history {
+      background-image: url('images/history.gif')
+    }
+    .moonwalk {
+      background-image: url('images/moonwalk.gif')
+    }
+    .drive {
+      background-image: url('images/drive.gif')
+    }
+    .cyber-punk {
+      background-image: url('images/cyber-punk.gif')
+    }
 
   body
 
@@ -107,7 +125,7 @@ html
         h2 Don't stop,
         h2 don't stop the thread
 
-      section
+      section(data-bespoke-backdrop='land-before')
         h3 From the beginning of time (1995)
         h2 We had callbacks in JavaScript
 
@@ -126,7 +144,7 @@ html
                 });
             });
 
-      section
+      section(data-bespoke-backdrop='promise')
         h2 Promises 
         h3 Made it into the language ~20 years later in 2014
 
@@ -253,7 +271,7 @@ html
         h2 Top-Level Await
 
       section
-        h2 TLDR;
+        h2 TL;DR
         ul
           li.hide
           li Top-Level await can block execution
@@ -273,7 +291,7 @@ html
       section
         h1 Chapter Four
 
-      section
+      section(data-bespoke-backdrop='history')
         h2 A history lesson
 
       section
@@ -295,7 +313,7 @@ html
           li July 2015 `async` / `await` moved to stage two
           li it was decided to delay decision about Top-Level await at that time
 
-      section
+      section(data-bespoke-backdrop='moonwalk')
         h2 taking a step back
       
       section
@@ -475,7 +493,7 @@ html
 
       section
         h2 Optional Constraint
-        h5.headroom.slim Many of the use cases for top-level await are for bootstrapping an application. Enforcing that top-level await could only be used inside of a module without exports would allow individuals to use many of the patterns they would like to use in application bootstrapping while avoiding the edge cases of graph blocking or deadlocks.
+        h3.headroom Enforcing that top-level await could only be used inside of a module without exports.
 
       section
         h1 Use Cases
@@ -509,7 +527,7 @@ html
           li.hide
           li Variant A would halt progress in the module graph until resolved
           li Variant B would halt progress but not block siblings execution
-          li The optional constraint would limit the above constraints
+          li The optional constraint would limit the above concerns
 
       section
         h3 There are existing ways to halt progress in JavaScript
@@ -553,7 +571,7 @@ html
       section
         h1 Chapter Six
       
-      section
+      section(data-bespoke-backdrop='drive')
         h3 The Road
         h2 To Stage 2
 
@@ -594,7 +612,7 @@ html
 
       section
         h3 With this infrastructure in place
-        h2 Every module would now have an a promise capability
+        h2 Every module would now have a promise capability
         h3 Allowing for deferred execution at the Top-Level
 
       section
@@ -614,7 +632,7 @@ html
         h3 Unblocking Objections to either semantics
 
       section
-        h3 We identified that the feature would only be supported
+        h3 We clarified that the feature would only be supported
         h2 In the module goal
         h3 Unblocking objections about interoperability
 
@@ -631,7 +649,7 @@ html
       section
         h1 Chapter Seven
 
-      section
+      section(data-bespoke-backdrop='cyber-punk')
         h2 What's next?
 
       section
