@@ -42,7 +42,8 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "start": "gulp serve"
+    "start": "gulp serve",
+    "deploy": "gulp build && gsutil -m rsync -d -r dist gs://kni.sh/coldfront-2018"
   },
   "license": "Apache-2.0"
 }
