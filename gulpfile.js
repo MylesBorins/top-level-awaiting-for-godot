@@ -59,6 +59,12 @@ gulp.task('images', ['clean:images'], function() {
     .pipe(connect.reload());
 });
 
+gulp.task('spec', ['clean:spec'], function() {
+  return gulp.src('src/spec/**/*')
+    .pipe(gulp.dest('dist/spec'))
+    .pipe(connect.reload());
+});
+
 gulp.task('clean', function(done) {
   del('dist', done);
 });
@@ -79,6 +85,10 @@ gulp.task('clean:images', function(done) {
   del('dist/images', done);
 });
 
+gulp.task('clean:spec', function(done) {
+  del('dist/spec', done);
+});
+
 gulp.task('connect', ['build'], function() {
   connect.server({
     root: 'dist',
@@ -90,6 +100,7 @@ gulp.task('watch', function() {
   gulp.watch('src/**/*.jade', ['html']);
   gulp.watch('src/styles/**/*.styl', ['css']);
   gulp.watch('src/images/**/*', ['images']);
+  gulp.watch('src/spec/**/*', ['spec']);
   gulp.watch([
     'src/scripts/**/*.js',
     'bespoke-theme-*/dist/*.js' // Allow themes to be developed in parallel
@@ -100,7 +111,7 @@ gulp.task('deploy', ['build'], function(done) {
   ghpages.publish(path.join(__dirname, 'dist'), { logger: gutil.log }, done);
 });
 
-gulp.task('build', ['js', 'html', 'css', 'images']);
+gulp.task('build', ['js', 'html', 'css', 'images', 'spec']);
 
 gulp.task('serve', ['connect', 'watch']);
 

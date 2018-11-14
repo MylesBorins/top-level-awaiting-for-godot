@@ -86,6 +86,9 @@ html
     .cyber-punk {
       background-image: url('images/cyber-punk.gif')
     }
+    .hatch {
+      background-image: url('images/egg.gif')
+    }
 
   body
 
@@ -97,10 +100,10 @@ html
         h3 With your host
         h4
           a(href='https://twitter.com/MylesBorins') @MylesBorins
-        p  DotJS 2018
+        p  ColdFront 2018
         
       section(data-bespoke-backdrop='hello')
-        h1 Bonjour!
+        h1 Hej!
         
       section
         h1 My Name is Myles
@@ -163,18 +166,6 @@ html
               console.log('I got chu bae');
             });
 
-      //- section
-      //-   h2 Controversial?
-      //-
-      //- section
-      //-   h2 Yes!
-      //-
-      //- section
-      //-   h2 Better?
-      //-
-      //- section
-      //-   h2 Depends who you ask
-
       section
         h2 Async / Await
         h3 Arrived in December of 2016
@@ -195,23 +186,76 @@ html
               }
             }());
 
-      //- section
-      //-   h2 Controversial?
-      //-
-      //- section
-      //-   h2 Nope.
-      //-
-      //- section
-      //-   h2 Better?
-      //-
-      //- section
-      //-   h2 Definitely!
-      //-
-      //- section
-      //-   h2 Can we improve it?
-      //-
-      //- section
-      //-   h2 I think so!
+      section
+        h2 A Practical Example
+
+      section
+        h1 Callbacks
+
+      section.small-code
+        pre
+          code.language-javascript.
+            request('https://nodejs.org/download/release/index.json', {
+              json: true
+            }, function (error, response, body) {
+              if (error) {
+                console.error(error);
+                return
+              }
+              body.sort(sortDate);
+              const {version, date} = body[0];
+              console.log(`The latest release of node is ${version}.\n`
+                + `It was released on ${date}.`);
+            });
+
+      section
+        h1 Promises
+
+      section.small-code
+        pre
+          code.language-javascript.
+            fetch('https://nodejs.org/download/release/index.json')
+              .then(response => response.json())
+              .then(json => {
+                json.sort(sortDate);
+                const {version, date} = json[0];
+                console.log(`The latest release of node is ${version}.\n`
+                  + `It was released on ${date}.`);
+              })
+              .catch(e => console.error(e));
+
+      section
+        h1 Async / Await
+
+      section.small-code
+        pre
+          code.language-javascript.
+            async function main () {
+              const response =
+                await fetch('https://nodejs.org/download/release/index.json');
+              const json = await response.json();
+              json.sort(sortDate);
+              const {version, date} = json[0];
+              console.log(`The latest release of node is ${version}.\n`
+                + `It was released on ${date}.`);
+            }
+
+            main()
+              .catch(e => console.error(e));
+
+      section
+        h1 Top-Level Await
+
+      section.small-code
+        pre
+          code.language-javascript.
+            const response =
+              await fetch('https://nodejs.org/download/release/index.json');
+            const json = await response.json();
+            json.sort(sortDate);
+            const {version, date} = json[0];
+            console.log(`The latest release of node is ${version}.\n`
+              + `It was released on ${date}.`);
 
       section
         h1 Chapter Two
@@ -256,8 +300,11 @@ html
         h1 Chapter Three
 
       section
-        h2 Top-level await
+        h2 Top-Level Await
         h2 is a footgun 👣🔫
+
+      section
+        img(src='images/footgun.png', alt='definition of a footgun' width='80%')
 
       section
         h3 In September of 2016
@@ -274,19 +321,14 @@ html
         h2 TL;DR
         ul
           li.hide
-          li Top-Level await can block execution
-          li Fetching resources over network would blocked
-          li No interop support for common.js
-          li Cycles could introduce deadlock
-          li Potential to introduce indeterminism into graph execution
+          li Top-Level Await could block execution
+          li Top-Level Await could block fetching resources
+          li The would be no clear interop story for common.js
+          li Circular dependencies could introduce deadlock
 
       section
-        h2 Despite this strong critique
-        h3 There was no prior decision from TC39 regarding Top-Level Await
-
-      section
-        h2 I decided to take Top-Level Await to the committee
-        h3 Worst case scenario, get a solid no and stop flame wars
+        h3 In late 2017 Top-Level Await was still a contencious topic
+        h2 But I wasn't ready to give up
 
       section
         h1 Chapter Four
@@ -295,23 +337,27 @@ html
         h2 A history lesson
 
       section
-        h2 Top-Level await was always being considered
-        h3 while async / await was being standardized
-
-      section
-        h3 I did some research by reviewing the agendas of past meetings.
+        h3 The first thing to do was review the agendas of past TC39 meetings
         h4
           a(href="http://github.com/tc39/agendas/") http://github.com/tc39/agendas/
 
       section
-        h3 Some quick history of
-        h2 async / await
+        h2 Despite the strong critique
+        h3 There was no prior decision from TC39 regarding Top-Level Await
+
+      section
+        h3 async / await at TC39
+        h2 Greatest Hits
         ul
           li.hide
           li originally brought to TC39 in January of 2014
           li In April 2014 `await` keyword was reserved in the module goal
           li July 2015 `async` / `await` moved to stage two
-          li it was decided to delay decision about Top-Level await at that time
+          li it was decided to delay decision about Top-Level Await at that time
+
+      section
+        h2 Top-Level Await was always being considered
+        h3 while async / await was being standardized
 
       section(data-bespoke-backdrop='moonwalk')
         h2 taking a step back
@@ -327,32 +373,32 @@ html
         h3 The Committee who implements it is
         img.headroom(src='images/tc39.png' alt='logo for tc39')
 
-      //- section
-      //-   h3 The committee meets
-      //-   h2 every other month
-      //-   h3 At locations around the world
+      section
+        h3 The committee meets
+        h2 every other month
+        h3 At locations around the world
 
-      //- section
-      //-   h2 The participants include
-      //-   ul
-      //-     li.hide
-      //-     li Major Browser Vendors
-      //-     li Academics
-      //-     li Industry Experts
-      //-     li Open Source Maintainers
-      //-     li Maybe you?
+      section
+        h2 The participants include
+        ul
+          li.hide
+          li Major Browser Vendors
+          li Academics
+          li Industry Experts
+          li Open Source Maintainers
+          li Maybe you?
 
-      //- section(data-bespoke-backdrop='anyone')
-      //-   h1 Can Anyone Join?
-      //-
-      //- section
-      //-   h1 What is a Member?
-      //-
-      //- section
-      //-   h1 What is a Delegate?
+      section(data-bespoke-backdrop='anyone')
+        h1 Can Anyone Join?
 
-      //- section
-      //-   h1 How does a feature get developed?
+      section
+        h1 What is a Member?
+
+      section
+        h1 What is a Delegate?
+
+      section
+        h1 How does a feature get developed?
 
       section
         h1 Consensus
@@ -372,10 +418,19 @@ html
       section
         h2 A footgun in the door
 
+      section(data-bespoke-backdrop='hatch')
+        //-image source: https://www.deviantart.com/kirokaze/art/Digital-Egg-628390825
+        h2 So I hatched a plan
+
       section
-        h2 In January 2018
-        h3 Top-Level await was brought TC39
-        h2 Attempting for Stage 1
+        h3 If I brought Top-Level Await to TC39
+        h2 We could get some sort of decision
+        h3 and stop all the arguments once and for all!
+
+      section
+        h3 In January 2018
+        h2.slim Top-Level Await was brought to TC39
+        h3 Attempting for Stage 1
 
       section
         h2 The proposal included
@@ -383,8 +438,8 @@ html
           li.hide
           li History of TLA
           li Motivation for the feature
-          li Potential Implementations
           li Use Cases
+          li Potential Implementations
           li Constraints
 
       section
@@ -425,77 +480,6 @@ html
             };
 
       section
-        h1 Potential Solutions
-
-      section
-        h2 Variant A
-        h3.slim A call to top-level await would block execution of the graph until it had resolved.
-
-      section
-        h2 Assuming A, B, C
-        h2 all have a Top-Level await
-        pre
-          code.language-javascript.
-            import a from './a.mjs'
-            import b from './b.mjs'
-            import c from './c.mjs'
-
-            console.log(a, b, c);
-
-      section
-        h2 The code is equivalent to
-        pre
-          code.language-javascript.
-            (async () => {
-              const a = await import('./a.mjs');
-              const b = await import('./b.mjs');
-              const c = await import('./c.mjs');
-  
-              console.log(a, b, c);
-            })();
-
-      section(data-bespoke-backdrop='graph')
-      section(data-bespoke-backdrop='post-one')
-      section(data-bespoke-backdrop='post-two')
-      section(data-bespoke-backdrop='post-three')
-      section(data-bespoke-backdrop='post-four')
-      section(data-bespoke-backdrop='post-five')
-
-      section
-        h2 Variant B
-        h3.slim A call to top-level await would block execution of child nodes in the graph but would allow siblings to continue to execute.
-
-      section
-        h2 Assuming A, B, C
-        h2 all have a Top-Level await
-        pre
-          code.language-javascript.
-            import a from './a.mjs'
-            import b from './b.mjs'
-            import c from './c.mjs'
-
-            console.log(a, b, c);
-
-      section
-        h2 The code is equivalent to
-        pre
-          code.language-javascript.
-            (async () => {
-              const [a, b, c] = await Promise.all([
-                import('./a.mjs'),
-                import('./b.mjs'),
-                import('./c.mjs')
-              ]);
-              console.log(a, b, c);
-            })();
-
-      section(data-bespoke-backdrop='post-five')
-
-      section
-        h2 Optional Constraint
-        h3.headroom Enforcing that top-level await could only be used inside of a module without exports.
-
-      section
         h1 Use Cases
       
       section
@@ -522,13 +506,145 @@ html
             }
 
       section
-        h2 Constraints
+        h1 Potential Solutions
+
+      section
+        h2 Variant A
+        h3.slim A call to Top-Level Await would block execution of the graph until it had resolved.
+
+      section
+        h2 Assuming A, B, C
+        h3 each have a Top-Level Await call in their bodies
+        pre
+          code.language-javascript.
+            import a from './a.mjs'
+            import b from './b.mjs'
+            import c from './c.mjs'
+
+            console.log(a, b, c);
+
+      section
+        h2 The code is equivalent to
+        pre
+          code.language-javascript.
+            (async () => {
+              const a = await import('./a.mjs');
+              const b = await import('./b.mjs');
+              const c = await import('./c.mjs');
+  
+              console.log(a, b, c);
+            })();
+
+      section
+        h2 Variant B
+        h3.slim A call to Top-Level Await would block execution of parent nodes in the graph but would allow siblings to continue to execute.
+
+      section
+        h2 Assuming A, B, C
+        h3 each have a Top-Level Await call in their bodies
+        pre
+          code.language-javascript.
+            import a from './a.mjs'
+            import b from './b.mjs'
+            import c from './c.mjs'
+
+            console.log(a, b, c);
+
+      section
+        h2 The code is equivalent to
+        pre
+          code.language-javascript.
+            (async () => {
+              const [a, b, c] = await Promise.all([
+                import('./a.mjs'),
+                import('./b.mjs'),
+                import('./c.mjs')
+              ]);
+              console.log(a, b, c);
+            })();
+
+      section
+        h2 Optional Constraint
+        h3.headroom Enforcing that Top-Level Await could only be used inside of a module without exports.
+
+      section
+        img(src="images/loading.gif" alt="Please wait... loading")
+
+      section
+        h3 ESModules specify
+        h2 Asynchronous Load
+        h2 +
+        h2 Synchronous Execution
+
+      section
+        h2 Load
+        ul
+          li.hide
+          li Fetch source texts for *all* the module graph
+          li Resolve specifiers within source texts
+
+      section
+        h2 Link
+        ul
+          li.hide
+          li Module Graph must be in memory
+          li Executed in pre-order traversal (Root, Left, Right)
+
+      section(data-bespoke-backdrop='graph')
+        //- img.headroom(src='images/graph.jpg' alt='A graph. Root depends on A and B. A depends on C and D.' width='60%')
+
+      section(data-bespoke-backdrop='pre-one')
+        //- img.headroom(src='images/graph-preorder-1.jpg' alt='first node travelled to' width='60%')
+      section(data-bespoke-backdrop='pre-two')
+        //- img.headroom(src='images/graph-preorder-2.jpg' alt='second node travelled to' width='60%')
+      section(data-bespoke-backdrop='pre-three')
+        //- img.headroom(src='images/graph-preorder-3.jpg' alt='third node travelled to' width='60%')
+      section(data-bespoke-backdrop='pre-four')
+        //- img.headroom(src='images/graph-preorder-4.jpg' alt='fourth node travelled to' width='60%')
+      section(data-bespoke-backdrop='pre-five')
+        //- img.headroom(src='images/graph-preorder-5.jpg' alt='fifth node travelled to' width='60%')
+      section
+        h2 Execution
+        ul
+          li.hide
+          li Requires linked be completed
+          li Done in post-order traversal (Left, Right, Root)
+
+      section(data-bespoke-backdrop='graph')
+      section(data-bespoke-backdrop='post-one')
+      section(data-bespoke-backdrop='post-two')
+      section(data-bespoke-backdrop='post-three')
+      section(data-bespoke-backdrop='post-four')
+      section(data-bespoke-backdrop='post-five')
+
+      section
+        img(src="images/loading.gif" alt="Please wait... loading")
+
+      section
+        h2 Variant A
+        h3.slim A call to Top-Level Await would block execution of the graph until it had resolved.
+
+      section(data-bespoke-backdrop='post-five')
+
+      section
+        h2 Variant B
+        h3.slim A call to Top-Level Await would block execution of parent nodes in the graph but would allow siblings to continue to execute.
+
+      section(data-bespoke-backdrop='post-five')
+
+      section
+        h2 Optional Constraint
+        h3.headroom Enforcing that Top-Level Await could only be used inside of a module without exports.
+
+      section
+        h2 Constraints were identified
         ul
           li.hide
           li Variant A would halt progress in the module graph until resolved
           li Variant B would halt progress but not block siblings execution
           li The optional constraint would limit the above concerns
-
+          li Circular dependencies could introduce deadlock
+          
       section
         h3 There are existing ways to halt progress in JavaScript
         
@@ -555,12 +671,12 @@ html
         h6 Atomics allow blocking forward progress by waiting on an index that never changes
       
       section
-        h3 Is Blocking Execution
-        h2 A strong enough reason
-        h3 To block Top-Level Await?
+        h3 As there are already ways to halt progress
+        h2 It wasn't deemed a strong enough reason
+        h3 To block Stage 1
       
       section
-        h3 Another Constraint:
+        h3 We punted on
         h2 Deadlock
 
       section
@@ -592,33 +708,19 @@ html
         h3 When your ESM code is executed
         h2 It is represented
         h3 as a graph of
-        h2 Source Text Module Records
+        h2 Module Records
+
+      //- section
+      //-   h3 A Source Text Module Record is used to represent information about a module that was defined from ECMAScript source text that was parsed using the goal symbol Module.
+
+      section(data-bespoke-backdrop='post-five')
 
       section
-        h3 A Source Text Module Record is used to represent information about a module that was defined from ECMAScript source text that was parsed using the goal symbol Module.
+        h3 ECMA262 defines how this graph is represented in memory
+        h2 and the algorithm for executing the graph
 
       section
-        h2 ECMA262 defines how these Records are instantiated
-        h3 and how they are represented in memory
-
-      section
-        h3 We made all modules in the graph
-        h2 Async
-
-      section
-        h3 To do this we abstracted code from the
-        h2 Async Function Specification
-        h3 for instantiation of Module Records in the graph
-
-      section
-        h3 With this infrastructure in place
-        h2 Every module would now have a promise capability
-        h3 Allowing for deferred execution at the Top-Level
-
-      section
-        h3 We were able to defer execution by calling
-        h2 Spec-Level Await on the execution of the module
-        h3 Yes, the spec has it's own abstractions
+        iframe(src="/spec/" style="background:white;" heigh="100%")
 
       section
         h3 this algorithm supports Variant A
@@ -674,113 +776,6 @@ html
               await topLevelAwait('patience')
               await topLevelAwait('persistence');
             ]);
-      //- section
-      //-   h1 Callbacks
-      //-
-      //- section.small-code
-      //-   pre
-      //-     code.language-javascript.
-      //-       request('https://nodejs.org/download/release/index.json', {
-      //-         json: true
-      //-       }, function (error, response, body) {
-      //-         if (error) {
-      //-           console.error(error);
-      //-           return
-      //-         }
-      //-         body.sort(sortDate);
-      //-         const {version, date} = body[0];
-      //-         console.log(`The latest release of node is ${version}.\n`
-      //-           + `It was released on ${date}.`);
-      //-       });
-      //-
-      //- section
-      //-   h1 Promises
-      //-
-      //- section.small-code
-      //-   pre
-      //-     code.language-javascript.
-      //-       fetch('https://nodejs.org/download/release/index.json')
-      //-         .then(response => response.json())
-      //-         .then(json => {
-      //-           json.sort(sortDate);
-      //-           const {version, date} = json[0];
-      //-           console.log(`The latest release of node is ${version}.\n`
-      //-             + `It was released on ${date}.`);
-      //-         })
-      //-         .catch(e => console.error(e));
-      //-
-      //- section
-      //-   h1 Async / Await
-      //-
-      //- section.small-code
-      //-   pre
-      //-     code.language-javascript.
-      //-       async function main () {
-      //-         const response =
-      //-           await fetch('https://nodejs.org/download/release/index.json');
-      //-         const json = await response.json();
-      //-         json.sort(sortDate);
-      //-         const {version, date} = json[0];
-      //-         console.log(`The latest release of node is ${version}.\n`
-      //-           + `It was released on ${date}.`);
-      //-       }
-      //-
-      //-       main()
-      //-         .catch(e => console.error(e));
-      //-
-      //- section
-      //-   h1 Top-Level Await
-      //-
-      //- section.small-code
-      //-   pre
-      //-     code.language-javascript.
-      //-       const response =
-      //-         await fetch('https://nodejs.org/download/release/index.json');
-      //-       const json = await response.json();
-      //-       json.sort(sortDate);
-      //-       const {version, date} = json[0];
-      //-       console.log(`The latest release of node is ${version}.\n`
-      //-         + `It was released on ${date}.`);
-
-      //- section
-      //-   h3 ESModules specify
-      //-   h2 Asynchronous Load
-      //-   h2 +
-      //-   h2 Synchronous Execution
-      //-
-      //- section
-      //-   h2 Load
-      //-   ul
-      //-     li.hide
-      //-     li Fetch source texts for *all* the module graph
-      //-     li Resolve specifiers within source texts
-      //-
-      //- section
-      //-   h2 Link
-      //-   ul
-      //-     li.hide
-      //-     li Module Graph must be in memory
-      //-     li Executed in pre-order traversal (Root, Left, Right)
-
-      //- section(data-bespoke-backdrop='graph')
-      //-   //- img.headroom(src='images/graph.jpg' alt='A graph. Root depends on A and B. A depends on C and D.' width='60%')
-      //-
-      //- section(data-bespoke-backdrop='pre-one')
-      //-   //- img.headroom(src='images/graph-preorder-1.jpg' alt='first node travelled to' width='60%')
-      //- section(data-bespoke-backdrop='pre-two')
-      //-   //- img.headroom(src='images/graph-preorder-2.jpg' alt='second node travelled to' width='60%')
-      //- section(data-bespoke-backdrop='pre-three')
-      //-   //- img.headroom(src='images/graph-preorder-3.jpg' alt='third node travelled to' width='60%')
-      //- section(data-bespoke-backdrop='pre-four')
-      //-   //- img.headroom(src='images/graph-preorder-4.jpg' alt='fourth node travelled to' width='60%')
-      //- section(data-bespoke-backdrop='pre-five')
-      //-   //- img.headroom(src='images/graph-preorder-5.jpg' alt='fifth node travelled to' width='60%')
-      //- section
-      //-   h2 Execution
-      //-   ul
-      //-     li.hide
-      //-     li Requires linked be completed
-      //-     li Done in post-order traversal (Left, Right, Root)
 
 
       section
