@@ -100,10 +100,10 @@ html
         h3 With your host
         h4
           a(href='https://twitter.com/MylesBorins') @MylesBorins
-        p  ColdFront 2018
+        p  FullStack NYC
         
       section(data-bespoke-backdrop='hello')
-        h1 Hej!
+        h1 Oh hai!
         
       section
         h1 My Name is Myles
@@ -716,12 +716,9 @@ html
         h2.slim the algorithm for executing the graph
 
       section
-        iframe(src="/spec/" style="background:white;" heigh="100%")
-
-      section
-        h3 this algorithm supports Variant A
-        h2 A spec level Promise.all would add support
-        h3 for Variant B
+        h3 We implemented an algorithm
+        h2 That could support
+        h3 Either variant
 
       section
         h3 as such we were able to defer
@@ -751,25 +748,44 @@ html
         h2 What's next?
 
       section
-        h3 I want to move forward
-        h2 With Variant B
-        h3 We need to build consensus around these semantics
-
-      section
         h3 I think we are off to a good start
         img.headroom(src="images/rich.png", alt="rich harris likes variant b" height="60%")
 
       section
-        h3 We are going through a variety of examples
+        h3 A foot gun no longer?
+        img.headroom(src="images/tla-is-not-a-foot-gun.png", alt="rich harris likes variant b" height="60%")
+
+      section
+        h3 We went through a variety of examples
         h2 To define semantics for deadlock
-        h3 The intent is to make things fail early and obviously
+        h3 Our plan is to still defer to runtime
 
       section
-        h3 We need to finish writing the spec text
-        h2 The text then needs to be reviewed and approved
+        h3 It turns out that Wasm Modules
+        h2 May also require
+        h3 Variant B
 
       section
-        h2 ETA, ¯\_(ツ)_/¯
+        h2 littledan to the rescue!
+        h3 https://twitter.com/littledan
+
+      section
+        h3 over the last few months
+        h2 Dan has helped get spec changes done
+        h3 including changes to HTML
+
+      section
+        h1 Thank you dan 👏🏽
+
+      section
+        h3 Final changes are being made to spec text
+        h2 It still needs to be reviewed
+
+      section
+        iframe(src="/spec/" style="background:white;" heigh="100%")
+
+      section
+        h2 There is a chance we may go for stage 3 in June
         pre
           code.language-javascript.
             const [you, me] = Promise.all([
