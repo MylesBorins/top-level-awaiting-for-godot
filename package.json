@@ -5,7 +5,8 @@
     "name": "Myles Borins <mylesborins@google.com>"
   },
   "dependencies": {
-    "bespoke-theme-nebula": "^1.0.1"
+    "bespoke-theme-nebula": "^1.0.1",
+    "prismjs": "^1.17.1"
   },
   "devDependencies": {
     "bespoke": "^1.0.0",
@@ -18,8 +19,6 @@
     "bespoke-scale": "^1.0.0",
     "bespoke-theme-cube": "^2.0.0",
     "bespoke-touch": "^1.0.0",
-    "bower": "^1.7.9",
-    "debowerify": "^1.5.0",
     "del": "^1.1.1",
     "gh-pages": "^2.0.1",
     "gulp": "^3.8.1",
@@ -41,7 +40,6 @@
     "node": ">=6.12.0"
   },
   "scripts": {
-    "postinstall": "bower install",
     "start": "gulp serve",
     "deploy": "gulp build && gsutil -m rsync -d -r dist gs://kni.sh/coldfront-2018"
   },
