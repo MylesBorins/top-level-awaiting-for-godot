@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "bespoke-theme-nebula": "^1.0.1",
-    "prismjs": "^1.24.0"
+    "prismjs": "^1.25.0"
   },
   "devDependencies": {
     "bespoke": "^1.0.0",
