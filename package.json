@@ -33,7 +33,7 @@
     "gulp-uglify": "^0.3.1",
     "gulp-util": "^3.0.8",
     "insert-css": "^0.2.0",
-    "opn": "^5.4.0",
+    "opn": "^6.0.0",
     "through": "^2.3.4"
   },
   "engines": {
